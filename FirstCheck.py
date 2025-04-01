@@ -9,11 +9,11 @@ class MentalHealthChatbot:
         self.root = root
         self.root.title("Mental Health Support Chatbot")
         self.root.geometry("700x600")
-        self.root.configure(bg="#121212")  # Main window background
+        self.root.configure(bg="#121212") 
 
-        # TTK Style Setup
+     
         self.style = ttk.Style()
-        # Use "clam" (or "alt") so we can fully control button colors
+        
         self.style.theme_use("clam")
         self.style.configure(
             "My.TButton",
@@ -24,24 +24,22 @@ class MentalHealthChatbot:
             focusthickness=0,
             padding=6
         )
-        # Keep the button gray on hover/press
+       
         self.style.map(
             "My.TButton",
             background=[("active", "#4D4D4D"), ("pressed", "#4D4D4D"), ("disabled", "#4D4D4D")],
             foreground=[("active", "white"), ("pressed", "white"), ("disabled", "white")]
         )
 
-        # Track links for clickable URLs
+     
         self.link_count = 0
 
-        # Initialize conversation state
         self.conversation_started = False
         self.last_detected_issue = None
 
-        # Set up the UI layout
+      
         self.setup_ui()
 
-        # Crisis resources
         self.crisis_resources = {
             "India": [
                 "AASRA: 91-9820466726",
@@ -54,14 +52,14 @@ class MentalHealthChatbot:
             ]
         }
 
-        # Start the conversation
+        
         self.display_bot_message("Hi, I'm here to help. What's troubling you today?")
 
-        # Moved here so that all handler methods are defined.
+        
         self.keywords = {
             # Headaches
             "headache": self.handle_headache,
-            "migraine": self.handle_headache,  # (if you want to route "migraine" separately, change to self.handle_migraine)
+            "migraine": self.handle_headache,  
             "pain in head": self.handle_headache,
             "head pain": self.handle_headache,
 
@@ -136,11 +134,11 @@ class MentalHealthChatbot:
         self.chat_display.pack(fill=tk.BOTH, expand=True)
         self.chat_display.config(state=tk.DISABLED)
         
-        # Options frame for clickable responses
+        
         self.options_frame = tk.Frame(self.root, bg="#1e1e1e")
         self.options_frame.pack(fill=tk.X, padx=10, pady=5)
         
-        # User input area
+        
         self.input_frame = tk.Frame(self.root, bg="#1e1e1e")
         self.input_frame.pack(fill=tk.X, padx=10, pady=10)
         
@@ -154,7 +152,7 @@ class MentalHealthChatbot:
         self.user_input.pack(side=tk.LEFT, fill=tk.X, expand=True)
         self.user_input.bind("<Return>", self.process_input)
         
-        # The Send button (ttk, custom style)
+        
         self.send_button = ttk.Button(
             self.input_frame,
             text="Send",
@@ -163,7 +161,7 @@ class MentalHealthChatbot:
         )
         self.send_button.pack(side=tk.RIGHT, padx=(5, 0))
 
-        # The Reset button (ttk, custom style)
+        
         self.reset_button = ttk.Button(
             self.input_frame,
             text="Reset",
@@ -248,9 +246,9 @@ class MentalHealthChatbot:
         self.last_detected_issue = None
         self.display_bot_message("Hi, I'm here to help. What's troubling you today?")
 
-    # ---------------------------
-    # Specific Handlers
-    # ---------------------------
+    
+    #Subcategories ahead
+
     def handle_headache(self):
         self.display_bot_message("I see you're experiencing headaches. How would you describe them?")
         self.add_option_button("Mild", lambda: self.handle_severity("mild", "headache"))
@@ -317,9 +315,9 @@ class MentalHealthChatbot:
                 "AIIMS: https://www.aiims.edu/"
             )
 
-    # ---------------------------
-    # Severity Handler for Headache, Depression, Anxiety, and Stress
-    # ---------------------------
+    
+    #Severity Handler for Headache, Depression, Anxiety, and Stress
+    
     def handle_severity(self, severity, issue):
         responses = {
             "headache": {
@@ -387,9 +385,9 @@ class MentalHealthChatbot:
         else:
             self.handle_unknown_input()
 
-    # ---------------------------
-    # New Subcategories for Sleep Issues
-    # ---------------------------
+    
+    #New Subcategories for Sleep Issues
+    
     def handle_specific_sleep_issue(self, issue_type):
         responses = {
             "falling asleep": (
@@ -440,9 +438,9 @@ class MentalHealthChatbot:
         self.add_option_button("Depression", self.handle_depression)
         self.add_option_button("Sleep Issues", self.handle_sleep_issues)
 
-    # ---------------------------
-    # New Subcategories for Migraines
-    # ---------------------------
+    
+    #New Subcategories for Migraines
+    
     def handle_migraine(self):
         self.display_bot_message("It seems you're experiencing migraines. Please rate your migraine severity:")
         self.add_option_button("Mild", lambda: self.handle_migraine_severity("mild"))
@@ -467,9 +465,9 @@ class MentalHealthChatbot:
             "More info: https://www.aaa.org/"
         )
 
-    # ---------------------------
-    # New Subcategories for Menstrual/Period Pains
-    # ---------------------------
+    
+    #New Subcategories for Menstrual/Period Pains
+    
     def handle_menstrual_pain(self):
         self.display_bot_message(
             "It appears you're experiencing menstrual/period pains. Please select the severity:"
@@ -496,9 +494,9 @@ class MentalHealthChatbot:
             "More info: https://www.endometriosis.org/"
         )
 
-    # ---------------------------
-    # New Subcategories for Hypertension (Blood Pressure)
-    # ---------------------------
+    
+    #New Subcategories for Hypertension (Blood Pressure)
+    
     def handle_hypertension(self):
         self.display_bot_message("You're concerned about hypertension. Please rate the severity:")
         self.add_option_button("Mild", lambda: self.handle_hypertension_subcategories("mild"))
@@ -523,9 +521,9 @@ class MentalHealthChatbot:
             "More info: https://www.cdc.gov/bloodpressure/"
         )
 
-    # ---------------------------
-    # New Subcategories for Back Pain
-    # ---------------------------
+    
+    #New Subcategories for Back Pain
+    
     def handle_back_pain(self):
         self.display_bot_message("Is your back pain in the lower or upper region?")
         self.add_option_button("Lower Back", lambda: self.handle_lower_back_subcategories())
@@ -567,9 +565,9 @@ class MentalHealthChatbot:
             "More info: https://www.spine-health.com/conditions/upper-back-pain"
         )
 
-    # ---------------------------
-    # New Subcategories for Allergies
-    # ---------------------------
+    
+    #New Subcategories for Allergies
+    
     def handle_allergies(self):
         self.display_bot_message("Are you dealing with seasonal, food, or other allergies?")
         self.add_option_button("Seasonal", lambda: self.handle_allergies_type("seasonal"))
@@ -646,9 +644,9 @@ class MentalHealthChatbot:
             "More info: https://www.foodallergy.org/common-allergens/egg-allergy"
         )
 
-    # ---------------------------
-    # Remaining Existing Handlers
-    # ---------------------------
+    
+    #Remaining Existing Handlers
+    
     def handle_digestive_issues(self):
         self.display_bot_message("Are you experiencing digestive issues such as stomach pain or acid reflux?")
         self.add_option_button("Stomach Pain", lambda: self.handle_digestive_issue_type("stomach"))
@@ -689,9 +687,9 @@ class MentalHealthChatbot:
                 "More info: https://www.arthritis.org/"
             )
 
-    # ---------------------------
-    # Crisis Resources and Additional Info
-    # ---------------------------
+    
+    #Crisis Helpline
+    
     def display_crisis_resources(self):
         crisis_message = "🚨 IMPORTANT: If you're in crisis or thinking about self-harm, please seek immediate help:\n\n"
         for country, resources in self.crisis_resources.items():
@@ -727,9 +725,9 @@ class MentalHealthChatbot:
             "• The Live Love Laugh Foundation: https://thelivelovelaughfoundation.org/\n• AIIMS Psychiatry: https://www.aiims.edu/"
         )
 
-    # ---------------------------
-    # Additional Conditions: Diabetes and Asthma
-    # ---------------------------
+    
+    #Diabetes and Asthma
+    
     def handle_diabetes(self):
         self.display_bot_message("Concerned about diabetes? Do you need help with high blood sugar or management tips?")
         self.add_option_button("High Blood Sugar", lambda: self.handle_diabetes_severity("high"))
